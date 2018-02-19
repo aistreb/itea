@@ -19,6 +19,12 @@ public class LinkedinLoginTest {
         emailField.sendKeys("a.iastreb1234@gmail.com");
         passwordField.sendKeys("150599");
         signInButton.click();
+
+        WebElement alertMessage = driver.findElement(By.id("feed-tab-icon"));
+
+        Assert.assertTrue(alertMessage.isDisplayed(), "No Home icon.");
+
+
     }
 
 
