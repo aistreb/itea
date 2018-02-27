@@ -43,7 +43,7 @@ public class LinkedinSearchTest {
 		Assert.assertEquals(results.size(), 10, "Number of results is wrong");
 
 
-		for (int i = 0; i < results.size(); i++) {
+		/*for (int i = 0; i < results.size(); i++) {
 			((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", results.get(i));
             int j=i+1;
 			String cardTitle = driver.findElement(
@@ -51,7 +51,17 @@ public class LinkedinSearchTest {
 			System.out.println(j+" : "+cardTitle);
 			Assert.assertTrue(cardTitle.contains(searchTerm),
 					"Searchterm "+searchTerm+ " not found in cart number "+ Integer.toString(j));
+		}*/
+
+
+		for (WebElement result: results) {
+			((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", result);
+			String cardTitle = result.getText();
+			System.out.println(cardTitle);
+			Assert.assertTrue(cardTitle.toLowerCase().contains(searchTerm),
+					"Searchterm "+searchTerm+ " not found in cart number "+ Integer.toString(j));
 		}
+
 
 
 
