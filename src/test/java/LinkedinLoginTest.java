@@ -30,46 +30,28 @@ public class LinkedinLoginTest {
     }
 
     @Test
-    public void successfullLoginTest() throws InterruptedException {
+    public void successfullLoginTest() {
 
-        String initialPageTitle = driver.getTitle();
-        String initialPageUrl = driver.getCurrentUrl();
+        LinkedinLoginPage loginPage = new LinkedinLoginPage(driver);
+        String initialPageTitle = loginPage.getPageTitle();
+        String initialPageUrl = loginPage.getPageUrl();
 
-        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page title is wrong");
-        //WebElement emailField = driver.findElement(By.xpath("//*[@id='login-email']"));
-        WebElement emailField = driver.findElement (By.id("login-email"));
-        WebElement passwordField = driver.findElement (By.id("login-password"));
-        WebElement signInButton = driver.findElement (By.id("login-submit"));
+        Assert.assertEquals(initialPageTitle, "LinkedIn: Log In or Sign Up","Login page title is wrong");
 
-        emailField.sendKeys("a.iastreb1234@gmail.com");
-        passwordField.sendKeys("itea2018");
-        signInButton.click();
-        Thread.sleep(5000);
-        WebElement homeIcon = driver.findElement(By.id("feed-tab-icon"));
-        WebElement userIcon = driver.findElement (By.id("profile-nav-item"));
+        LinkedinBasePage homePage = loginPage.loginAs("a.iastreb1234@gmail.com", "itea2018");
 
-        //Assert.assertTrue(homeIcon.isDisplayed(), "No Home icon.");
-        Assert.assertTrue(userIcon.isDisplayed(), "User icon is not dispayed.");
-       // Assert.assertFalse(driver.getTitle().equals(initialPageTitle), "Page title did not changed after login.");
-        Assert.assertNotEquals(driver.getTitle(), initialPageTitle, "Page title did not changed after login.");
-        Assert.assertNotEquals(driver.getCurrentUrl(), initialPageUrl, "Page url did not changed after login.");
+        Assert.assertTrue(homePage.isSignedIn(), "User icon is not dispayed.");
+        Assert.assertNotEquals(homePage.getPageTitle(), initialPageTitle, "Page title did not changed after login.");
+        Assert.assertNotEquals(homePage.getPageUrl(), initialPageUrl, "Page url did not changed after login.");
     }
 
 
     @Test
     public void negativeLoginTest() {
 
-
-        WebElement emailField = driver.findElement (By.id("login-email"));
-        WebElement passwordField = driver.findElement (By.id("login-password"));
-        WebElement signInButton = driver.findElement (By.id("login-submit"));
-
-        emailField.sendKeys("test@ukr.net");
-        passwordField.sendKeys("12345");
-        signInButton.click();
-
-        WebElement alertMessage = driver.findElement(By.xpath("//div[@id='global-alert-queue']//strong[not(text()='')]"));
-
-        Assert.assertTrue(alertMessage.isDisplayed(), "Alert message is not displayed.");
+        LinkedinLoginPage loginPage = new LinkedinLoginPage(driver);
+        LinkedinFailedLoginPage failedLoginPage = loginPage.failedLoginAs("a.iastreb1234@gmail.com", "itea1234");
+        Assert.assertTrue(failedLoginPage.isLoginFailed(), "Alert message is not displayed.");
+        //failedLoginPage.loginAs("a.iastreb1234@gmail.com", "itea2018");
     }
 }

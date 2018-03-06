@@ -59,7 +59,7 @@ public class LinkedinSearchTest {
 			String cardTitle = result.getText();
 			System.out.println(cardTitle);
 			Assert.assertTrue(cardTitle.toLowerCase().contains(searchTerm),
-					"Searchterm "+searchTerm+ " not found in cart number "+ Integer.toString(j));
+					"Searchterm "+searchTerm+ " not found in cart number ");
 		}
 
 
