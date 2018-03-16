@@ -27,4 +27,9 @@ public class LinkedinLoginPage extends LinkedinBasePage{
     }
 
 
+	public String getEmailMessage() {
+	}
+
+	public String getPwdMessage() {
+	}
 }

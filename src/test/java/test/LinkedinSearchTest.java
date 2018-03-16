@@ -12,26 +12,15 @@ import page.LinkedinSearchPage;
 
 import java.util.List;
 
-public class LinkedinSearchTest {
-	WebDriver driver;
+public class LinkedinSearchTest extends LinkedinBaseTest{
 
-	@BeforeMethod
-	public void beforeTest(){
-		driver = new FirefoxDriver();
-		driver.get("https://www.linkedin.com/");
-	}
-
-	@AfterMethod
-	public void afterTest() {
-		driver.close();
-	}
 
 	@Test
 	public void basicSearchTest(){
 		String searchTerm = "hr";
 
-		LinkedinLandingPage loginPage = new LinkedinLandingPage(driver);
-		LinkedinHomePage homePage = loginPage.loginAs("iteatest@i.ua", "1q2w3e_4r5t");
+		//LinkedinLandingPage loginPage = new LinkedinLandingPage(driver);
+		LinkedinHomePage homePage = landingPage.loginAs("a.iastreb1234@gmail.com", "itea2018");
 		LinkedinSearchPage searchPage = homePage.searchByTerm(searchTerm);
 		List<String> results = searchPage.getResults();
 

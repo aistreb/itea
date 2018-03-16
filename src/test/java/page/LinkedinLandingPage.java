@@ -38,4 +38,8 @@ public class LinkedinLandingPage extends LinkedinBasePage{
 	}
 
 
+	/*public boolean isLandingPage() {
+		waitUntilElementIsClickable(emailField);
+		return emailField.isDisplayed();
+	}*/
 }
