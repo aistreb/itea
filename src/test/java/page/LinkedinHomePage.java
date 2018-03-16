@@ -1,47 +1,36 @@
 package page;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
+public class LinkedinHomePage extends LinkedinBasePage{
 
-public class LinkedinHomePage extends LinkedinBasePage {
+	@FindBy(id = "profile-nav-item")
+	private WebElement userIcon;
 
-    @FindBy(id = "profile-nav-item")
-    private WebElement userIcon;
+	@FindBy(xpath = "//input[@placeholder='Search']")
+	private WebElement searchField;
 
-    @FindBy (xpath ="//li[contains(@class,'search-result__occluded-item')]")
-    public List<WebElement> results;
+	@FindBy(xpath = "//*[@type='search-icon']")
+	private WebElement searchIcon;
 
-    @FindBy (className ="search-results")
-    private WebElement searchResult;
 
-    public LinkedinHomePage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-    }
 
-    public boolean isSignedIn () {
-        waitUntilElemenIsCliclable(userIcon, 5);
-        return userIcon.isDisplayed();
-    }
+	public LinkedinHomePage(WebDriver driver) {
+		super(driver);
+		PageFactory.initElements(driver, this);
+	}
 
-    public void goSearch (String searchTerm){
-        driver.findElement(By.xpath("//input[@placeholder='Поиск']")).sendKeys(searchTerm);
-        driver.findElement(By.xpath("//*[@type='search-icon']")).click();
-    }
+	public boolean isSignedIn() {
+		waitUntilElementIsClickable(userIcon);
+		return userIcon.isDisplayed();
+	}
 
-    public int countSearchResult () {
-        waitUntilElemenIsCliclable(searchResult, 10);
-        return results.size();
-    }
-
-    public String scrollSearchResult (WebElement result){
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", result);
-        return result.getText();
-    }
+	public LinkedinSearchPage searchByTerm(String searchTerm) {
+		searchField.sendKeys(searchTerm);
+		searchIcon.click();
+		return new LinkedinSearchPage(driver);
+	}
 }

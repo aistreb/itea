@@ -5,31 +5,37 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LinkedinLandingPage extends LinkedinBasePage {
+public class LinkedinLandingPage extends LinkedinBasePage{
 
-    @FindBy(id = "login-email")
-    private WebElement emailField;
+	@FindBy(id = "login-email")
+	private WebElement emailField;
 
-    @FindBy(id = "login-password")
-    private WebElement passwordField;
+	@FindBy(id = "login-password")
+	private WebElement passwordField;
 
-    @FindBy(id = "login-submit")
-    private WebElement signInButton;
+	@FindBy(id = "login-submit")
+	private WebElement signInButton;
 
-    public LinkedinLandingPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-    }
+	public LinkedinLandingPage(WebDriver driver){
+		super(driver);
+		PageFactory.initElements(driver, this);
+	}
 
-    public LinkedinHomePage loginAs(String email, String password) {
-        waitUntilElemenIsCliclable(emailField, 5);
-        emailField.sendKeys(email);
-        passwordField.sendKeys(password);
-        signInButton.click();
-        return PageFactory.initElements(driver, LinkedinHomePage.class);
-        //return new LinkedinHomePage(driver);
-    }
-
+	public <T> T loginAs(String email, String password){
+		waitUntilElementIsClickable(emailField, 5);
+		emailField.sendKeys(email);
+		passwordField.sendKeys(password);
+		signInButton.click();
+		if (getPageUrl().contains("/feed")) {
+			return (T) new LinkedinHomePage(driver);
+		}
+		if (getPageUrl().contains("/login-submit")) {
+			return (T) new LinkedinLoginPage(driver);
+		}
+		else {
+			return (T) this;
+		}
+	}
 
 
 }

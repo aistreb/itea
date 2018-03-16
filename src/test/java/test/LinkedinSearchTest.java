@@ -1,9 +1,6 @@
 package test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -11,21 +8,17 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import page.LinkedinHomePage;
 import page.LinkedinLandingPage;
+import page.LinkedinSearchPage;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class LinkedinSearchTest {
 	WebDriver driver;
-	LinkedinLandingPage landingPage;
-	String searchTerm;
 
 	@BeforeMethod
 	public void beforeTest(){
 		driver = new FirefoxDriver();
 		driver.get("https://www.linkedin.com/");
-		landingPage = new LinkedinLandingPage(driver);
-		searchTerm = "hr";
 	}
 
 	@AfterMethod
@@ -34,18 +27,19 @@ public class LinkedinSearchTest {
 	}
 
 	@Test
-	public void basicSearchTest() {
-		LinkedinHomePage homePage = landingPage.loginAs("a.iastreb1234@gmail.com", "itea2018");
-		Assert.assertTrue(homePage.isSignedIn(), "User icon is not dispayed.");
-		homePage.goSearch(searchTerm);
-		Assert.assertEquals(homePage.countSearchResult(), 10, "Number of results is wrong");
+	public void basicSearchTest(){
+		String searchTerm = "hr";
 
-		for (WebElement result: homePage.results) {
-			String cardTitle = homePage.scrollSearchResult(result);
-			//System.out.println(cardTitle);
-			Assert.assertTrue(cardTitle.toLowerCase().contains(searchTerm),
-					"Searchterm "+searchTerm+ " not found in cart number ");
+		LinkedinLandingPage loginPage = new LinkedinLandingPage(driver);
+		LinkedinHomePage homePage = loginPage.loginAs("iteatest@i.ua", "1q2w3e_4r5t");
+		LinkedinSearchPage searchPage = homePage.searchByTerm(searchTerm);
+		List<String> results = searchPage.getResults();
+
+		Assert.assertEquals(results.size(), 10, "Number of results is wrong");
+
+		for (String result : results) {
+			Assert.assertTrue(result.toLowerCase().contains(searchTerm),
+					"Searchterm "+searchTerm+ " not found in cart");
 		}
-
 	}
 }
