@@ -16,6 +16,12 @@ public class LinkedinLoginPage extends LinkedinBasePage{
 	@FindBy(id = "btn-primary")
 	private WebElement signInButton;
 
+	@FindBy(id="session_password-login-error")
+	private WebElement pwdMessage;
+
+	@FindBy (id ="session_key-login-error")
+	private WebElement emailMessage;
+
     public LinkedinLoginPage(WebDriver driver){
 		super(driver);
 		PageFactory.initElements(driver, this);
@@ -26,10 +32,11 @@ public class LinkedinLoginPage extends LinkedinBasePage{
         return emailField.isDisplayed();
     }
 
-
 	public String getEmailMessage() {
+    	return emailMessage.getText();
 	}
 
 	public String getPwdMessage() {
+    	return pwdMessage.getText();
 	}
 }
