@@ -42,7 +42,8 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
 				{"xys", "xys", "Please enter a valid email address.", "The password you provided must have at least 6 characters."},
 				//{"a.iastreb1234@gmail.com", "pass1234","","Hmm, that's not the right password. Please try again or request a new one."},
 				{"a.iastreb1234@gmail.com", "ITEA2018","","Hmm, that's not the right password. Please try again or request a new one."},
-				{"a.iastreb4@gmail.com","123456","Hmm, we don't recognize that email. Please try again.",""}};
+				{"a.iastreb4@gmail.com","123456","Hmm, we don't recognize that email. Please try again.",""}
+		};
 	}
 
 	@Test(dataProvider = "negativeTestReturnToLogin")

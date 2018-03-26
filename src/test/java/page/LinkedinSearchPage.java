@@ -9,8 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
 public class LinkedinSearchPage extends LinkedinBasePage{
 
 	@FindBy(xpath = "//li[contains(@class,'search-result__occluded-item')]")
@@ -25,8 +23,7 @@ public class LinkedinSearchPage extends LinkedinBasePage{
 	}
 
 	public List<String> getResults() {
-
-		waitUntilElementIsClickable(resultsNumber, 10);
+		waitUntilElementIsVisible(resultsNumber, 10);
 		List<String> resultsStringList = new ArrayList();
 		for (WebElement result : resultsWebElementList) {
 			((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", result);

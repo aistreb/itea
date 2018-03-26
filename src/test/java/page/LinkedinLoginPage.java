@@ -22,21 +22,21 @@ public class LinkedinLoginPage extends LinkedinBasePage{
 	@FindBy (id ="session_key-login-error")
 	private WebElement emailMessage;
 
-    public LinkedinLoginPage(WebDriver driver){
+	public LinkedinLoginPage(WebDriver driver){
 		super(driver);
 		PageFactory.initElements(driver, this);
 	}
 
-    public boolean isLoginPage() {
-        waitUntilElementIsClickable(emailField);
-        return emailField.isDisplayed();
-    }
+	public boolean isLoginPage() {
+		waitUntilElementIsClickable(emailField);
+		return emailField.isDisplayed();
+	}
 
 	public String getEmailMessage() {
-    	return emailMessage.getText();
+		return emailMessage.getText();
 	}
 
 	public String getPwdMessage() {
-    	return pwdMessage.getText();
+		return pwdMessage.getText();
 	}
 }
